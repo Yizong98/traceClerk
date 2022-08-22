@@ -5,13 +5,30 @@ from pytz import timezone
 import pytz
 import os
 from flask_cors import CORS
+import sys
 
+production_path = "/usr/share/clerk/data"
 
 def create_app(test_config=None):
     app = Flask(__name__)
-    db_file_name = os.path.join(app.instance_path, 'historical_date.json')
     CORS(app, supports_credentials=True)
-    print(db_file_name)
+    db_file_name = os.path.join(app.instance_path, 'historical_date.json')
+
+    # checks if the production volumne path exists.
+    # If it exists, use this path.
+    if os.path.exists(production_path):
+        db_file_name = os.path.join(production_path, 'historical_date.json')
+
+    # ensures the instance folder exists.
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
+
+    # creates the json file if it doesn't exist.
+    if not os.path.exists(db_file_name):
+        with open(db_file_name, "w") as file:
+            file.write("[]")
 
     @app.route('/get_latest_update')
     def get_latest_update():
