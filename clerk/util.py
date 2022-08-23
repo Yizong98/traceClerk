@@ -51,14 +51,9 @@ def update_date_request(date):
         'Content-Type': 'application/json',
     }
 
-    data = '{{"date":"{date}","mode":"historical","password":"Open, sesame"}}'.format(
+    data = '{{"body":{{"date":"{date}","mode":"historical","password":"Open, sesame"}}}}'.format(
         date=date)
 
     response = requests.post(
-        'https://4jzevgh86d.execute-api.us-east-1.amazonaws.com/default/traceAPI', headers=headers, data=data)
+        'http://trace.default.svc.cluster.local:8080/2015-03-31/functions/function/invocations', headers=headers, data=data)
     return response.text
-
-# build flask image
-# deploy clerk
-# deploy trace algo with changed clerk endpoint
-# change endpoint in clerk. restart
