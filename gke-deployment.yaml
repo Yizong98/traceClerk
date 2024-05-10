@@ -31,7 +31,7 @@ spec:
             claimName: pvc-clerk
       containers:
         - name: clerk
-          image: yizong/clerk
+          image: ucsdcmi/trace-clerk:recent
           imagePullPolicy: Always
           resources:
             limits:

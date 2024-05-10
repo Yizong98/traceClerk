@@ -55,5 +55,5 @@ def update_date_request(date):
         date=date)
 
     response = requests.post(
-        'http://trace.default.svc.cluster.local:8080/2015-03-31/functions/function/invocations', headers=headers, data=data)
+        'http://new-trace-with-db.default.svc.cluster.local:8080/2015-03-31/functions/function/invocations', headers=headers, data=data)
     return response.text
